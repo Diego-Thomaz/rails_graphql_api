@@ -1,4 +1,4 @@
-class Types::CardAttributes < Types::BaseInputObject
+class Types::CardInput < Types::BaseInputObject
   description "Attributes for creating or updating a card"
   argument :name, String, required: true
   argument :mana_cost, Integer, required: true
@@ -8,4 +8,5 @@ class Types::CardAttributes < Types::BaseInputObject
   argument :number, String, required: false
   argument :img_url, String, required: true
   argument :price, Float, required: true
+  argument :kinds, [KindInput], required: true
 end
