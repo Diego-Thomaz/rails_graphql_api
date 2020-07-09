@@ -1,4 +1,6 @@
 class Mutations::CreateCard < Mutations::BaseMutation
+  include Mutations::Concerns::KindMap
+  
   argument :attributes, Types::CardInput, required: true
 
   field :card, Types::CardType, null: false
@@ -14,17 +16,9 @@ class Mutations::CreateCard < Mutations::BaseMutation
       }
     else
       {
-        card: nil,
+        card: { id: 0 },
         errors: card.errors.full_messages
       }
     end
-  end
-
-  private
-
-  def prepare_kinds(attributes)
-    kinds = Kind.where(id: attributes[:kinds].map { |x| x[:id].to_i })
-    attributes[:kinds] = kinds
-    attributes
   end
 end

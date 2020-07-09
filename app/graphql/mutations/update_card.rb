@@ -1,5 +1,7 @@
 class Mutations::UpdateCard < Mutations::BaseMutation
-  argument :attributes, Types::CardUpdateAttributes, required: true
+  include Mutations::Concerns::KindMap
+
+  argument :attributes, Types::CardInput, required: true
   argument :id, ID, required: true
 
   field :card, Types::CardType, null: false
@@ -8,14 +10,14 @@ class Mutations::UpdateCard < Mutations::BaseMutation
   def resolve(attributes:, id:)
     card = Card.find(id)
 
-    if card.update(attributes.to_h)
+    if card.update(prepare_kinds(attributes.to_h))
       {
         card: card,
         errors: []
       }
     else
       {
-        card: nil,
+        card: card,
         errors: card.errors.full_messages
       }
     end
