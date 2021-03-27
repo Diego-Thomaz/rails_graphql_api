@@ -1,5 +1,5 @@
 class Types::CardInput < Types::BaseInputObject
-  description "Attributes for creating or updating a card"
+  description 'Attributes for creating or updating a card'
   argument :name, String, required: false
   argument :mana_cost, Integer, required: false
   argument :base_text, String, required: false
